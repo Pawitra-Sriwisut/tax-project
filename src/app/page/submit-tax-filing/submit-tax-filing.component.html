@@ -1,0 +1,41 @@
+<div class="header">
+
+</div>
+<div class="content">
+    <div class="row text-center mt-4">
+        <div class="col-12">
+            <h2 class="text-bold">Submit Tax Filing</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <mat-stepper [linear]="isLinear" #stepper [labelPosition]="'bottom'">
+                <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup">
+                        <ng-template matStepLabel>Input Detail</ng-template>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        This is some text within a card body.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary">Next</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Review & Confirm</ng-template>
+                    <p>You are now done.</p>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button (click)="stepper.reset()">Reset</button>
+                    </div>
+                </mat-step>
+            </mat-stepper>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+.header {
+    height: 3rem;
+    background-color: steelblue;
+}
+
+.content {
+    margin: 10px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.mt-5rem {
+    margin-top: 5rem;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 900px) {
+    .mat-horizontal-stepper-header-container {
+        margin: 0 10vh 0 10vh !important;
+    }
+}
+
+@media only screen and (min-width: 901px) and (max-width: 1400px) {
+    .mat-horizontal-stepper-header-container {
+        margin: 0 30vh 0 30vh !important;
+    }
+}
+
+@media only screen and (min-width: 1401px) and (max-width: 1699px) {
+    .mat-horizontal-stepper-header-container {
+        margin: 0 50vh 0 50vh !important;
+    }
+}
+
+@media only screen and (min-width: 1700px) {
+    .mat-horizontal-stepper-header-container {
+        margin: 0 70vh 0 70vh !important;
+    }
+}
