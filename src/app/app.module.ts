@@ -7,12 +7,16 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { FullLayoutComponent } from './layout/full-layout/full-layout.component';
 import { SubmitTaxFilingComponent } from './page/submit-tax-filing/submit-tax-filing.component';
+import { InputDetailComponent } from './page/component/input-detail/input-detail.component';
+import { ReviewAndConfirmComponent } from './page/component/review-and-confirm/review-and-confirm.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FullLayoutComponent,
-    SubmitTaxFilingComponent
+    SubmitTaxFilingComponent,
+    InputDetailComponent,
+    ReviewAndConfirmComponent
   ],
   imports: [
     BrowserModule,

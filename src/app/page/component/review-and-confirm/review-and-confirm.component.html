@@ -1,0 +1,95 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <h5>Tax Filing Detail</h5>
+                <hr>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 col-lg-2 mb-2">
+                <label class="sub-header">Type of filing</label>
+            </div>
+            <div class="col-12 col-lg-10">
+                <label>{{ taxData.filingType }}</label>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 col-lg-2 mb-2">
+                <label class="sub-header" *ngIf="taxData.filingTypeValue === '0'">VAT Month</label>
+                <label class="sub-header" *ngIf="taxData.filingTypeValue !== '0'">Tax Month</label>
+            </div>
+            <div class="col-12 col-lg-10">
+                <label>{{ taxData.month + ' ' + taxData.year }}</label>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <h5>Tax Computation</h5>
+                <hr>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 col-lg-8 mb-2">
+                <label class="sub-header" *ngIf="taxData.filingTypeValue === '0'">Total value of taxable electronic
+                    service exclusive of VAT
+                </label>
+                <label class="sub-header" *ngIf="taxData.filingTypeValue !== '0'">Underdeclared Thai taxable electronic
+                    service
+                </label>
+            </div>
+            <div class="col-12 col-lg-4">
+                <label>{{ (taxData.saleAmount | number: '1.2-2') + ' THB' }}</label>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 col-lg-8 mb-2">
+                <label class="sub-header">Total VAT to be remitted</label>
+                <br>
+                <label>(7% of Total value of taxable electronic service exclusive of VAT)</label>
+            </div>
+            <div class="col-12 col-lg-4">
+                <label>{{ (taxData.taxAmount | number: '1.2-2') + ' THB' }}</label>
+            </div>
+        </div>
+        <ng-container *ngIf="taxData.filingTypeValue === '1'">
+            <div class="row mt-3">
+                <div class="col-12 col-lg-8 mb-2">
+                    <label class="sub-header">Surcharge</label>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <label>{{ (taxData.surcharge | number: '1.2-2') + ' THB' }}</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 col-lg-8 mb-2">
+                    <label class="sub-header">Penalty</label>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <label>{{ (taxData.penalty | number: '1.2-2') + ' THB' }}</label>
+                </div>
+            </div>
+        </ng-container>
+        <div class="row mt-3">
+            <div class="col-12 col-lg-8 mb-2">
+                <label class="sub-header">Total Amount Payable</label>
+            </div>
+            <div class="col-12 col-lg-4">
+                <label class="sub-header">{{ (taxData.totalAmount | number: '1.2-2') + ' THB' }}</label>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <h5>Declaration</h5>
+                <hr>
+                <label>I hereby certify that information given above are true and correct and agree to be bound by such
+                    information</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-4 text-center">
+    <button type="button" class="btn btn-light" matStepperPrevious>Back</button>
+    <button type="button" class="btn btn-primary" style="margin-left: 1rem;" matStepperNext
+        (click)="onConfirmAndSubmit()">Confirm and Submit</button>
+</div>

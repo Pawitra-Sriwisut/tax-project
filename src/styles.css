@@ -43,3 +43,12 @@
 {
     color: #f37021;
 }
+
+.sub-header {
+    font-weight: 500;
+}
+
+.second-detail {
+    display: flex;
+    justify-content: space-between;
+}
