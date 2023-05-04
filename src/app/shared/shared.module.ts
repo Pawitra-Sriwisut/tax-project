@@ -4,11 +4,13 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import * as pipe from './pipe';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { DirectivesModule } from "./directives/directives.module";
 import { CustomNumeralFormatterDirective } from "./directives/custom-numeral-formatter.directive";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { QuestionDirective } from "./directives/question.directive";
 
 const angularMatModule = [
   MatSlideToggleModule,
@@ -19,14 +21,16 @@ const angularMatModule = [
 
 @NgModule({
   declarations: [
-    CustomNumeralFormatterDirective
+    CustomNumeralFormatterDirective,
+    QuestionDirective,
   ],
   imports: [
     CommonModule,
     RouterModule,
     ...angularMatModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule,
   ],
   providers: [pipe.CustomNumeralPipe],
   exports: [
@@ -34,7 +38,9 @@ const angularMatModule = [
     FormsModule,
     ReactiveFormsModule,
     DirectivesModule,
-    CustomNumeralFormatterDirective
+    CustomNumeralFormatterDirective,
+    QuestionDirective,
+    NgbModule,
   ],
 })
 export class SharedModule { }

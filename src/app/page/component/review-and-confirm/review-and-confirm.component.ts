@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { TaxModel } from '../../model/submit-tax-filing.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-review-and-confirm',
@@ -9,13 +9,15 @@ import { TaxModel } from '../../model/submit-tax-filing.model';
 })
 export class ReviewAndConfirmComponent implements OnInit {
   @Input() taxData: TaxModel = new TaxModel();
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
 
-  onConfirmAndSubmit(): void {
-    alert('Yeeeee')
+  onConfirmAndSubmit(modal: any): void {
+    this.modalService.open(modal, { ariaLabelledBy: 'modal-basic-title' }).result.then(() => {
+      window.location.reload();
+    });
   }
 
 }

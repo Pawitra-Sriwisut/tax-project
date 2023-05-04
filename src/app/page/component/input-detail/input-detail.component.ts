@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RadioModel, SelectModel, TaxModel } from '../../model/submit-tax-filing.model';
 import { SubmitTaxFilingService } from '../../service/submit-tax-filing.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-input-detail',
@@ -20,6 +21,7 @@ export class InputDetailComponent implements OnInit {
 
   constructor(
     private submitTaxFilingService: SubmitTaxFilingService,
+    private modalService: NgbModal
   ) {
     this.filingTypes = this.submitTaxFilingService.queryFilingType();
     this.months = this.submitTaxFilingService.queryMonth();
@@ -38,12 +40,12 @@ export class InputDetailComponent implements OnInit {
     this.sumTotalOfVat();
   }
 
-  onChangeTaxAmount(): void {
+  onChangeTaxAmount(modal: any): void {
     const saleAmount = this.formGroup1.controls['saleAmount'].value || 0;
     const defaultTaxAmount = +((0.07 * saleAmount).toFixed(2));
     const taxAmount = this.formGroup1.controls['taxAmount'].value || 0;
     if (this.diff(defaultTaxAmount, taxAmount) > 20) {
-      alert('Invalid Tax')
+      this.modalService.open(modal, { ariaLabelledBy: 'modal-basic-title' });
       this.formGroup1.controls['taxAmount'].setValue(defaultTaxAmount);
       this.formGroup1.controls['surcharge'].setValue(+((0.1 * defaultTaxAmount).toFixed(2)));
     }
@@ -68,13 +70,13 @@ export class InputDetailComponent implements OnInit {
     }
   }
 
-  onNext(): void {
+  onNext(modal: any): void {
     const value = this.formGroup1.getRawValue();
     const filingTypeDec = this.filingTypes.find(x => x.value === value.filingType)?.label;
     const monthDec = this.months.find(x => x.value === value.month)?.label;
     const yearDec = this.years.find(x => x.value === value.year)?.label;
     if (this.formGroup1.invalid)
-      alert('Invalid Data')
+      this.modalService.open(modal, { ariaLabelledBy: 'modal-basic-title' });
     else {
       this.onSendTaxData.emit({
         filingTypeValue: value.filingType,

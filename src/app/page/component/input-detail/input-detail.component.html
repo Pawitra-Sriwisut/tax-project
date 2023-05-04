@@ -15,6 +15,7 @@
                             formControlName="filingType" name="filingType">
                         <label class="form-check-label" [for]="filingType.label">
                             {{ filingType.label}}
+                            <span question></span>
                         </label>
                     </div>
                 </div>
@@ -85,7 +86,7 @@
                 </div>
                 <div class="col-12 col-lg-4">
                     <input number [fraction]="2" [allow-empty]="true" type="text" class="form-control"
-                        formControlName="taxAmount" placeholder="THB" (blur)="onChangeTaxAmount()" />
+                        formControlName="taxAmount" placeholder="THB" (blur)="onChangeTaxAmount(taxModal)" />
                 </div>
             </div>
             <ng-container *ngIf="formGroup1.controls['filingType'].value === '1'">
@@ -99,6 +100,7 @@
                 <div class="row mt-3">
                     <div class="col-12 col-lg-8 mb-2">
                         <label>3. Surcharge</label>
+                        <span question></span>
                     </div>
                     <div class="col-12 col-lg-4">
                         <input number [fraction]="2" [allow-empty]="true" type="text" class="form-control"
@@ -108,6 +110,7 @@
                 <div class="row mt-3">
                     <div class="col-12 col-lg-8 mb-2">
                         <label>4. Penalty</label>
+                        <span question></span>
                     </div>
                     <div class="col-12 col-lg-4">
                         <input number [fraction]="2" [allow-empty]="true" type="text" class="form-control"
@@ -130,6 +133,36 @@
     <div class="mt-4 text-center">
         <button type="button" class="btn btn-light" matStepperPrevious>Back</button>
         <button type="button" class="btn btn-primary" style="margin-left: 1rem;" matStepperNext
-            (click)="onNext()">Next</button>
+            (click)="onNext(mymodal)">Next</button>
     </div>
 </form>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Error</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <span>Invalid Data</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close()">Ok</button>
+    </div>
+</ng-template>
+
+<ng-template #taxModal let-taxModal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Error</h4>
+        <button type="button" class="close" aria-label="Close" (click)="taxModal.dismiss()">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <span>Invalid Tax</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="taxModal.close()">Ok</button>
+    </div>
+</ng-template>

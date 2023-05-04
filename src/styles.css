@@ -52,3 +52,9 @@
     display: flex;
     justify-content: space-between;
 }
+
+.close {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+}

@@ -18,8 +18,8 @@ export class SubmitTaxFilingComponent implements OnInit {
   ) {
     this.formGroup1 = this.fb.group({
       filingType: ['0', Validators.required],
-      month: [1, Validators.required],
-      year: [2020, Validators.required],
+      month: ['1', Validators.required],
+      year: ['2020', Validators.required],
       saleAmount: [null, Validators.required],
       taxAmount: [null, Validators.required],
       surcharge: [{ value: null, disabled: true }],

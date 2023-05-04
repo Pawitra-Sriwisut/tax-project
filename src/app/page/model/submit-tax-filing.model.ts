@@ -4,7 +4,7 @@ export interface RadioModel {
 }
 
 export interface SelectModel {
-    value: number;
+    value: string;
     label: string;
 }
 
