@@ -18,6 +18,7 @@ export class InputDetailComponent implements OnInit {
   years: SelectModel[] = [];
   today: Date = new Date();
   currentMonth: number = 0;
+  model: TaxModel = new TaxModel();
 
   constructor(
     private submitTaxFilingService: SubmitTaxFilingService,
@@ -27,6 +28,7 @@ export class InputDetailComponent implements OnInit {
     this.months = this.submitTaxFilingService.queryMonth();
     this.years = this.submitTaxFilingService.queryYear();
     this.currentMonth = this.today.getMonth() + 1;
+    this.model.penalty = 200.00;
   }
 
   ngOnInit(): void {
@@ -35,31 +37,33 @@ export class InputDetailComponent implements OnInit {
   onChangeSaleAmount(): void {
     const saleAmount = this.formGroup1.controls['saleAmount'].value || 0;
     const taxAmount = +((0.07 * saleAmount).toFixed(2));
-    this.formGroup1.controls['taxAmount'].setValue(taxAmount);
-    this.formGroup1.controls['surcharge'].setValue(+((0.1 * taxAmount).toFixed(2)));
+    this.model.taxAmount = taxAmount;
+    this.model.surcharge = +((0.1 * taxAmount).toFixed(2));
     this.sumTotalOfVat();
   }
 
-  onChangeTaxAmount(modal: any): void {
+  onChangeTaxAmount(modal: any, e: any): void {
     const saleAmount = this.formGroup1.controls['saleAmount'].value || 0;
     const defaultTaxAmount = +((0.07 * saleAmount).toFixed(2));
-    const taxAmount = this.formGroup1.controls['taxAmount'].value || 0;
-    if (this.diff(defaultTaxAmount, taxAmount) > 20) {
-      this.modalService.open(modal, { ariaLabelledBy: 'modal-basic-title' });
-      this.formGroup1.controls['taxAmount'].setValue(defaultTaxAmount);
-      this.formGroup1.controls['surcharge'].setValue(+((0.1 * defaultTaxAmount).toFixed(2)));
+    const taxAmountValue = parseFloat(e.target.value.replaceAll(',', '')) || 0;
+    if (this.diff(defaultTaxAmount, taxAmountValue) > 20) {
+      this.modalService.open(modal, { ariaLabelledBy: 'modal-basic-title' }).result.then(()=> {
+        e.target.value = defaultTaxAmount.toFixed(2);
+        this.model.taxAmount = defaultTaxAmount;
+        this.model.surcharge = +((0.1 * defaultTaxAmount).toFixed(2));
+      });
     }
     else {
-      this.formGroup1.controls['surcharge'].setValue(+((0.1 * taxAmount).toFixed(2)));
+      this.model.surcharge = +((0.1 * taxAmountValue).toFixed(2));
     }
     this.sumTotalOfVat();
   }
 
   sumTotalOfVat(): void {
-    const taxAmount = this.formGroup1.controls['taxAmount'].value || 0;
-    const surcharge = this.formGroup1.controls['surcharge'].value || 0;
-    const penalty = this.formGroup1.controls['penalty'].value || 0;
-    this.formGroup1.controls['totalAmount'].setValue(taxAmount + surcharge + penalty);
+    const taxAmount = this.model.taxAmount || 0;
+    const surcharge = this.model.surcharge || 0;
+    const penalty = this.model.penalty || 0;
+    this.model.totalAmount = taxAmount + surcharge + penalty;
   }
 
   diff(num1: number, num2: number) {
@@ -71,6 +75,12 @@ export class InputDetailComponent implements OnInit {
   }
 
   onNext(modal: any): void {
+    this.formGroup1.patchValue({
+      taxAmount: this.model.taxAmount,
+      surcharge: this.model.surcharge,
+      penalty: this.model.penalty,
+      totalAmount: this.model.totalAmount,
+    });
     const value = this.formGroup1.getRawValue();
     const filingTypeDec = this.filingTypes.find(x => x.value === value.filingType)?.label;
     const monthDec = this.months.find(x => x.value === value.month)?.label;
