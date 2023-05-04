@@ -9,21 +9,88 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <mat-stepper [linear]="isLinear" #stepper [labelPosition]="'bottom'">
-                <mat-step [stepControl]="firstFormGroup">
-                    <form [formGroup]="firstFormGroup">
+            <mat-stepper [linear]="false" #stepper [labelPosition]="'bottom'">
+                <mat-step [stepControl]="formGroup1">
+                    <form [formGroup]="formGroup1">
                         <ng-template matStepLabel>Input Detail</ng-template>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        This is some text within a card body.
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>1. Tax Filing Detail</h5>
+                                        <hr>
+                                        <label class="mt-3" [required-field]="true">Type of filing</label>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <div class="form-check form-check-inline"
+                                            *ngFor="let filingType of filingTypes">
+                                            <input class="form-check-input" type="radio" [id]="filingType.label"
+                                                [value]="filingType.value" formControlName="filingType"
+                                                name="filingType">
+                                            <label class="form-check-label" [for]="filingType.label">
+                                                {{ filingType.label}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-12">
+                                        <label [required-field]="true">Vat Month</label>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12 col-lg-2 mb-2">
+                                        <select class="form-select" formControlName="month">
+                                            <option [value]="month.value" *ngFor="let month of months"
+                                                [disabled]="+month.value > currentMonth">{{ month.label }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-lg-2">
+                                        <select class="form-select" formControlName="year">
+                                            <option [value]="year.value" *ngFor="let year of years">{{ year.label }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-12">
+                                        <div class="second-detail">
+                                            <h5>2. Tax Computation</h5>
+                                            <span style="text-decoration: underline;">View Exchange Rate</span>
+                                        </div>
+                                        <hr>
+                                        <label [required-field]="true">Provide total value taxable electronic
+                                            service</label>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12 col-lg-8 mb-2">
+                                        <label>1. Total value of taxable electronic service exclusive of VAT</label>
+                                    </div>
+                                    <div class="col-12 col-lg-4">
+                                        <input number [fraction]="2" [allow-empty]="true" type="text"
+                                            class="form-control" formControlName="saleAmount" placeholder="THB"
+                                            (blur)="onChangeSaleAmount()" />
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-12 col-lg-8 mb-2">
+                                        <label>2. Total VAT to be remitted (7% of 1.)</label>
+                                    </div>
+                                    <div class="col-12 col-lg-4">
+                                        <input number [fraction]="2" [allow-empty]="true" type="text"
+                                            class="form-control" formControlName="taxAmount" placeholder="THB"
+                                            (blur)="onChangeTaxAmount()" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <button type="button" class="btn btn-primary">Next</button>
+                        <div class="mt-4 text-center">
+                            <button type="button" class="btn btn-light">Back</button>
+                            <button type="button" class="btn btn-primary" style="margin-left: 1rem;">Next</button>
                         </div>
                     </form>
                 </mat-step>

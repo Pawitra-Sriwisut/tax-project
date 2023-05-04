@@ -38,3 +38,8 @@
         margin: 0 70vh 0 70vh !important;
     }
 }
+
+.required
+{
+    color: #f37021;
+}
